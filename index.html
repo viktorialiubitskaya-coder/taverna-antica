@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taverna Antica — Cucina di Mare · Praia a Mare (CS)</title>
+  <meta name="description" content="Ristorante di pesce a Praia a Mare, Calabria. Pasta fatta a mano, pesce fresco del giorno. Piazza dei Martiri, 87028 Praia a Mare. Aperto 7 giorni su 7.">
+  <meta property="og:title" content="Taverna Antica — Cucina di Mare">
+  <meta property="og:description" content="Pasta fatta a mano, pesce fresco del giorno. Praia a Mare, Calabria.">
+  <meta property="og:image" content="taverna-antica.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,700;1,9..144,900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=EB+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cobalt:       '#003DA5',
+            rosa:         '#E4007C',
+            crema:        '#FAFAF7',
+            dorato:       '#F0B429',
+            'dorato-100': '#FEF3C7',
+            azzurro:      '#D6E8F5',
+            notte:        '#1C1C2E',
+          },
+          fontFamily: {
+            fraunces: ['Fraunces', 'Georgia', 'serif'],
+            sans:     ['DM Sans', 'system-ui', 'sans-serif'],
+            garamond: ['"EB Garamond"', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: #FAFAF7; color: #1C1C2E; }
+
+    /* ── Navbar ── */
+    .nav-scroll { background: #003DA5; box-shadow: 0 2px 24px rgba(0,61,165,.25); }
+    .nav-top    { background: transparent; }
+
+    /* ── Hero overlay ── */
+    .hero-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(0,29,80,.55) 0%,
+        rgba(0,29,80,.68) 40%,
+        rgba(0,29,80,.78) 70%,
+        rgba(0,29,80,.82) 100%
+      );
+    }
+
+    /* ── Fish animation ── */
+    @keyframes swim {
+      0%,100% { transform: translateX(0) rotate(0deg); }
+      40%      { transform: translateX(5px) rotate(.8deg); }
+    }
+    .fish-swim { animation: swim 4s ease-in-out infinite; }
+
+    /* ── Photo hover zoom ── */
+    .photo-card { overflow: hidden; }
+    .photo-card img { transition: transform .55s cubic-bezier(.25,.46,.45,.94); }
+    .photo-card:hover img { transform: scale(1.07); }
+
+    /* ── Menu tabs ── */
+    .tab-on  { background: #003DA5; color: #fff; border-color: #003DA5; }
+    .tab-off { background: transparent; color: #003DA5; border-color: #003DA5; }
+
+    /* ── Terrazza stripes ── */
+    .stripes-bg {
+      background-image: repeating-linear-gradient(
+        0deg,
+        #FAFAF7 0px, #FAFAF7 28px,
+        #FEF3C7 28px, #FEF3C7 56px
+      );
+    }
+
+    /* ── Fish divider ── */
+    .fish-rule { display: flex; align-items: center; gap: 14px; }
+    .fish-rule::before, .fish-rule::after {
+      content: ''; flex: 1; height: 1px; background: currentColor; opacity: .2;
+    }
+
+    /* ── WhatsApp float ── */
+    .wa-float {
+      background: #25D366;
+      box-shadow: 0 4px 22px rgba(37,211,102,.45);
+      transition: background .25s, transform .2s, box-shadow .25s;
+    }
+    .wa-float:hover {
+      background: #128C7E;
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(37,211,102,.55);
+    }
+
+    /* ── Section transitions ── */
+    .menu-panel { display: none; }
+    .menu-panel.active { display: block; }
+
+    /* ── Photo grid ── */
+    .grid-photo { aspect-ratio: 4/3; }
+    .grid-photo-tall { aspect-ratio: 3/4; }
+  </style>
+</head>
+
+<body class="bg-crema text-notte antialiased">
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════════════════ -->
+<nav id="navbar" class="nav-top fixed inset-x-0 top-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+
+      <!-- Logo -->
+      <a href="#top" class="flex items-center gap-3 group" aria-label="Taverna Antica — torna su">
+        <svg class="w-10 h-6 text-rosa group-hover:opacity-80 transition-opacity" viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+          <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+          <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+          <circle cx="163" cy="46" r="8" fill="white"/>
+          <circle cx="166" cy="46" r="3.5" fill="#003DA5"/>
+          <path d="M108,19 C115,5 130,2 142,12" fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <div class="font-fraunces font-black text-white text-base sm:text-lg leading-none tracking-widest">TAVERNA ANTICA</div>
+          <div class="text-white/60 text-[10px] tracking-[.18em] uppercase mt-0.5">Praia a Mare · Calabria</div>
+        </div>
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden lg:flex items-center gap-7">
+        <a href="#cucina"    class="text-white/85 hover:text-white text-sm font-medium tracking-wide transition-colors">La Cucina</a>
+        <a href="#menu"      class="text-white/85 hover:text-white text-sm font-medium tracking-wide transition-colors">Menu</a>
+        <a href="#sale"      class="text-white/85 hover:text-white text-sm font-medium tracking-wide transition-colors">Le Sale</a>
+        <a href="#dove-siamo" class="text-white/85 hover:text-white text-sm font-medium tracking-wide transition-colors">Dove Siamo</a>
+        <a href="tel:+393336814187"
+           class="bg-rosa hover:bg-rosa/90 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:shadow-lg">
+          Chiama ora
+        </a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="burger" class="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors" aria-label="Apri menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="burger-open"  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          <path id="burger-close" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" class="hidden"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-cobalt/97 backdrop-blur-md border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-5 py-5 space-y-1">
+      <a href="#cucina"     class="block text-white/90 hover:text-white py-3 text-sm font-medium border-b border-white/10">La Cucina</a>
+      <a href="#menu"       class="block text-white/90 hover:text-white py-3 text-sm font-medium border-b border-white/10">Menu</a>
+      <a href="#sale"       class="block text-white/90 hover:text-white py-3 text-sm font-medium border-b border-white/10">Le Sale</a>
+      <a href="#dove-siamo" class="block text-white/90 hover:text-white py-3 text-sm font-medium">Dove Siamo</a>
+      <a href="tel:+393336814187"
+         class="block bg-rosa text-white text-center py-3.5 rounded-full text-sm font-semibold mt-4">
+        📞 Chiama ora: +39 333 681 4187
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section id="top" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+  <!-- BG photo -->
+  <div class="absolute inset-0">
+    <img src="taverna-antica.jpg"
+         alt="Taverna Antica, Praia a Mare — ristorante di pesce"
+         class="w-full h-full object-cover object-center" loading="eager">
+    <div class="hero-overlay absolute inset-0"></div>
+  </div>
+
+  <!-- Pink fish watermark -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-end">
+    <svg class="w-[50vw] max-w-xl opacity-[.08] text-rosa mr-[-4vw]"
+         viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+      <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+      <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-5 sm:px-10 max-w-4xl mx-auto pt-20">
+
+    <!-- Place label -->
+    <p class="font-garamond italic text-white/75 text-xl sm:text-2xl mb-4 tracking-wide">
+      Praia a Mare &middot; Calabria
+    </p>
+
+    <!-- Main title -->
+    <h1 class="font-fraunces font-black leading-none mb-6">
+      <span class="block text-5xl sm:text-7xl lg:text-[7rem] text-white tracking-tight">TAVERNA</span>
+      <span class="block text-5xl sm:text-7xl lg:text-[7rem] text-rosa  tracking-tight italic">ANTICA</span>
+    </h1>
+
+    <!-- Tagline -->
+    <div class="mb-10 space-y-1">
+      <p class="font-fraunces font-bold text-white text-xl sm:text-2xl lg:text-3xl">
+        Cucina di mare. Accoglienza di famiglia.
+      </p>
+      <p class="font-garamond italic text-white/65 text-lg sm:text-xl">
+        Sea cuisine. Family welcome.
+      </p>
+    </div>
+
+    <!-- CTA buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#menu"
+         class="bg-rosa hover:bg-rosa/90 text-white px-9 py-4 rounded-full font-semibold text-lg transition-all hover:shadow-2xl hover:-translate-y-0.5">
+        Scopri il Menu
+      </a>
+      <a href="https://wa.me/393336814187" target="_blank" rel="noopener"
+         class="bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/30 text-white px-9 py-4 rounded-full font-semibold text-lg transition-all hover:-translate-y-0.5">
+        Prenota un Tavolo
+      </a>
+    </div>
+
+    <!-- Social proof strip -->
+    <div class="mt-14 flex flex-wrap items-center justify-center gap-5 text-white/55 text-sm">
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-dorato" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        Su Tripadvisor
+      </span>
+      <span class="text-white/25">·</span>
+      <span>Da generazioni in Piazza dei Martiri</span>
+      <span class="text-white/25">·</span>
+      <span>Aperto 7 giorni su 7</span>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 animate-bounce">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     LA STORIA IN TRE RIGHE
+════════════════════════════════════════════════════════════ -->
+<section class="py-20 px-5 bg-crema">
+  <div class="max-w-[62ch] mx-auto text-center">
+
+    <p class="font-fraunces font-black text-cobalt text-3xl sm:text-4xl leading-snug mb-7">
+      Da generazioni in Piazza dei Martiri.
+    </p>
+
+    <!-- Fish divider -->
+    <div class="flex items-center justify-center mb-7">
+      <span class="flex-1 h-px bg-notte/10 max-w-[80px]"></span>
+      <svg class="w-9 h-5 text-rosa mx-4 fish-swim" viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+        <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+        <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+        <circle cx="163" cy="46" r="8" fill="white"/>
+      </svg>
+      <span class="flex-1 h-px bg-notte/10 max-w-[80px]"></span>
+    </div>
+
+    <div class="space-y-5 text-notte/70 text-lg leading-relaxed">
+      <p>
+        Siamo nel cuore di Praia a Mare da decenni — un locale di famiglia, costruito sul rispetto per il mare e per chi si siede a tavola.
+      </p>
+      <p>
+        <span class="font-fraunces font-bold text-cobalt">Il pesce è del giorno.</span>
+        Ogni mattina scegliamo quello che arriva dal Tirreno. Se non è fresco, non è in tavola.
+      </p>
+      <p>
+        <span class="font-fraunces font-bold text-cobalt">Aperti sette giorni su sette,</span>
+        a pranzo e a cena. Perché il pesce buono non ha giorno di riposo.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TRUST STRIP
+════════════════════════════════════════════════════════════ -->
+<div class="bg-cobalt text-white py-10 px-5">
+  <div class="max-w-4xl mx-auto text-center">
+    <p class="font-fraunces font-bold text-2xl sm:text-3xl leading-relaxed mb-6">
+      Il pesce è del giorno. La pasta è fatta a mano.<br>
+      <span class="font-garamond font-normal italic text-white/75">Vi accogliamo come a casa.</span>
+    </p>
+    <div class="flex flex-wrap justify-center gap-6 text-white/60 text-sm">
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+        Pasta fresca ogni giorno
+      </span>
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+        Pesce fresco del mattino
+      </span>
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+        Aperto 7 giorni su 7
+      </span>
+      <span class="flex items-center gap-2">
+        <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+        Centro Praia a Mare
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     LA CUCINA — photo grid
+════════════════════════════════════════════════════════════ -->
+<section id="cucina" class="py-20 px-5 bg-crema">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-14">
+      <div class="fish-rule text-cobalt mb-5 max-w-xs mx-auto">
+        <svg class="w-9 h-5 text-rosa fish-swim flex-shrink-0" viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+          <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+          <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+          <circle cx="163" cy="46" r="8" fill="white"/>
+        </svg>
+      </div>
+      <h2 class="font-fraunces font-black text-cobalt text-5xl sm:text-6xl leading-tight mb-4">Dal Nostro Mare</h2>
+      <p class="font-garamond italic text-notte/65 text-xl max-w-xl mx-auto">
+        Cucina di mare di livello, servita con calore di famiglia.<br>
+        Ogni piatto racconta il Tirreno cosentino.
+      </p>
+    </div>
+
+    <!-- Grid: 3 col desktop, 2 col tablet, 1 col mobile -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+
+      <!-- Big feature card — spans 2 rows on lg -->
+      <div class="photo-card rounded-2xl relative lg:row-span-2 sm:col-span-2 lg:col-span-1 h-72 sm:h-80 lg:h-full">
+        <img src="taverna-antica-2.jpg"
+             alt="La cucina di Taverna Antica — pesce fresco"
+             class="w-full h-full object-cover rounded-2xl">
+        <div class="absolute bottom-0 left-0 right-0 p-6 rounded-b-2xl"
+             style="background: linear-gradient(to top, rgba(0,29,80,.85) 0%, transparent 100%)">
+          <div class="font-fraunces font-bold text-white text-2xl">La nostra cucina</div>
+          <p class="font-garamond italic text-white/75 text-sm mt-1">Mare calabrese in ogni piatto</p>
+        </div>
+      </div>
+
+      <div class="photo-card rounded-2xl h-56 sm:h-64">
+        <img src="taverna-antica-3.jpg" alt="Specialità di pesce" class="w-full h-full object-cover rounded-2xl">
+      </div>
+      <div class="photo-card rounded-2xl h-56 sm:h-64">
+        <img src="taverna-antica-4.jpg" alt="Pasta di mare fresca" class="w-full h-full object-cover rounded-2xl">
+      </div>
+      <div class="photo-card rounded-2xl h-56 sm:h-64">
+        <img src="taverna-antica-5.jpg" alt="Grigliata di pesce" class="w-full h-full object-cover rounded-2xl">
+      </div>
+      <div class="photo-card rounded-2xl h-56 sm:h-64">
+        <img src="taverna-antica-6.jpg" alt="Frittura di paranza" class="w-full h-full object-cover rounded-2xl">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PASTA FATTA A MANO — feature section
+════════════════════════════════════════════════════════════ -->
+<section class="py-20 px-5 bg-azzurro">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+      <!-- Photo -->
+      <div class="relative">
+        <div class="photo-card rounded-3xl overflow-hidden aspect-[4/3]">
+          <img src="photo1jpg.jpg"
+               alt="Ravioli fatti a mano — Taverna Antica"
+               class="w-full h-full object-cover">
+        </div>
+        <!-- Signature badge -->
+        <div class="absolute -top-4 -right-3 sm:-right-5 bg-rosa text-white rounded-2xl px-5 py-3 shadow-xl">
+          <div class="font-fraunces font-bold text-sm leading-none">Fatto a mano</div>
+          <div class="font-garamond italic text-white/80 text-xs mt-0.5">ogni giorno</div>
+        </div>
+        <!-- Fish accent pill -->
+        <div class="absolute -bottom-3 -left-3 bg-cobalt text-white rounded-xl px-3 py-2 flex items-center gap-2">
+          <svg class="w-9 h-5 text-rosa" viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+            <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+            <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+            <circle cx="163" cy="46" r="7" fill="white"/>
+          </svg>
+          <span class="text-xs font-semibold text-white/80">Signature</span>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div>
+        <p class="text-cobalt font-semibold text-xs tracking-[.2em] uppercase mb-3">Il nostro orgoglio</p>
+        <h2 class="font-fraunces font-black text-cobalt text-4xl sm:text-5xl leading-tight mb-6">
+          La Pasta<br>
+          <span class="text-rosa italic">Fatta a Mano</span>
+        </h2>
+        <blockquote class="font-garamond italic text-notte/75 text-xl leading-relaxed border-l-4 border-rosa pl-5 mb-7">
+          "Ogni mattina l'impasto è fresco, il ripieno è del giorno. Non è un modo di dire — è come lavoriamo qui da sempre."
+        </blockquote>
+        <p class="text-notte/70 leading-relaxed mb-8">
+          I ravioli ai gamberi rossi e pistacchio di Bronte sono il piatto che i clienti ricordano.
+          Pasta fresca ripiena, burro, pistacchio calabrese, gamberi del Tirreno.
+          Semplice e irripetibile.
+        </p>
+
+        <!-- Dish list -->
+        <ul class="space-y-3 mb-9">
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-3 text-rosa mt-1.5 flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <div>
+              <span class="font-fraunces font-bold text-cobalt">Ravioli ai gamberi rossi e pistacchio di Bronte</span>
+              <span class="font-garamond italic text-notte/45 text-sm ml-2">Red prawn ravioli with Bronte pistachio</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-3 text-rosa mt-1.5 flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <div>
+              <span class="font-fraunces font-bold text-cobalt">Ravioli con vongole</span>
+              <span class="font-garamond italic text-notte/45 text-sm ml-2">Ravioli with clams</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-3 text-rosa mt-1.5 flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <div>
+              <span class="font-fraunces font-bold text-cobalt">Spaghetti all'astice</span>
+              <span class="font-garamond italic text-notte/45 text-sm ml-2">Lobster spaghetti</span>
+            </div>
+          </li>
+        </ul>
+
+        <a href="#menu"
+           class="inline-flex items-center gap-2 bg-cobalt hover:bg-cobalt/90 text-white px-8 py-4 rounded-full font-semibold transition-all hover:shadow-xl hover:-translate-y-0.5">
+          Vedi tutto il menu
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MENU HTML
+════════════════════════════════════════════════════════════ -->
+<section id="menu" class="py-20 px-5 bg-crema">
+  <div class="max-w-3xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="fish-rule text-cobalt mb-5 max-w-xs mx-auto">
+        <svg class="w-9 h-5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+          <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+          <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+        </svg>
+      </div>
+      <h2 class="font-fraunces font-black text-cobalt text-5xl sm:text-6xl mb-3">Il Menu</h2>
+      <p class="font-garamond italic text-notte/55 text-lg">
+        I prezzi completi sono disponibili in sala &middot; Full prices available in restaurant
+      </p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-2 justify-center mb-10" role="tablist">
+      <button onclick="switchTab('antipasti')" id="btn-antipasti"
+              class="tab-on px-6 py-2.5 rounded-full border-2 font-semibold text-sm transition-all" role="tab">
+        Antipasti
+      </button>
+      <button onclick="switchTab('primi')" id="btn-primi"
+              class="tab-off px-6 py-2.5 rounded-full border-2 font-semibold text-sm transition-all" role="tab">
+        Primi di Mare
+      </button>
+      <button onclick="switchTab('secondi')" id="btn-secondi"
+              class="tab-off px-6 py-2.5 rounded-full border-2 font-semibold text-sm transition-all" role="tab">
+        Secondi &amp; Grigliate
+      </button>
+    </div>
+
+    <!-- ── ANTIPASTI ── -->
+    <div id="tab-antipasti" class="menu-panel active space-y-3" role="tabpanel">
+
+      <div class="bg-white rounded-2xl p-5 flex justify-between items-start border border-notte/5 hover:border-rosa/30 transition-colors shadow-sm">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <h3 class="font-fraunces font-bold text-cobalt text-lg">Tartare di tonno con pistacchio e agrumi</h3>
+          </div>
+          <p class="font-garamond italic text-notte/50 text-sm pl-6">Tuna tartare with pistachio and citrus</p>
+        </div>
+        <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 flex justify-between items-start border border-notte/5 hover:border-rosa/30 transition-colors shadow-sm">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <h3 class="font-fraunces font-bold text-cobalt text-lg">Frittura di paranza</h3>
+          </div>
+          <p class="font-garamond italic text-notte/50 text-sm pl-6">Mixed fried seafood · pesce azzurro del giorno</p>
+        </div>
+        <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+      </div>
+
+    </div>
+
+    <!-- ── PRIMI ── -->
+    <div id="tab-primi" class="menu-panel space-y-3" role="tabpanel">
+
+      <!-- Signature dish -->
+      <div class="bg-white rounded-2xl overflow-hidden border border-rosa/30 shadow-sm relative">
+        <div class="absolute top-0 right-0 bg-rosa text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">Signature</div>
+        <div class="p-5 pr-20 flex justify-between items-start">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+              <h3 class="font-fraunces font-bold text-cobalt text-lg">Ravioli ai gamberi rossi e pistacchio di Bronte</h3>
+            </div>
+            <p class="font-garamond italic text-notte/50 text-sm pl-6">Red prawn ravioli with Bronte pistachio</p>
+            <span class="inline-block mt-2 ml-6 text-xs text-cobalt/60 border border-cobalt/20 rounded-full px-2.5 py-0.5">pasta fatta a mano</span>
+          </div>
+          <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl overflow-hidden border border-cobalt/15 shadow-sm relative">
+        <div class="absolute top-0 right-0 bg-cobalt/75 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">Fatto a mano</div>
+        <div class="p-5 pr-24 flex justify-between items-start">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+              <h3 class="font-fraunces font-bold text-cobalt text-lg">Ravioli con vongole</h3>
+            </div>
+            <p class="font-garamond italic text-notte/50 text-sm pl-6">Ravioli with clams</p>
+          </div>
+          <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 flex justify-between items-start border border-notte/5 hover:border-rosa/30 transition-colors shadow-sm">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <h3 class="font-fraunces font-bold text-cobalt text-lg">Spaghetti all'astice</h3>
+          </div>
+          <p class="font-garamond italic text-notte/50 text-sm pl-6">Lobster spaghetti</p>
+        </div>
+        <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 flex justify-between items-start border border-notte/5 hover:border-rosa/30 transition-colors shadow-sm">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <h3 class="font-fraunces font-bold text-cobalt text-lg">Spaghetti alla granceola</h3>
+          </div>
+          <p class="font-garamond italic text-notte/50 text-sm pl-6">Spaghetti with spider crab</p>
+        </div>
+        <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 flex justify-between items-start border border-notte/5 hover:border-rosa/30 transition-colors shadow-sm">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <h3 class="font-fraunces font-bold text-cobalt text-lg">Spaghetti allo scoglio</h3>
+          </div>
+          <p class="font-garamond italic text-notte/50 text-sm pl-6">Seafood spaghetti</p>
+        </div>
+        <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 flex justify-between items-start border border-notte/5 hover:border-rosa/30 transition-colors shadow-sm">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <h3 class="font-fraunces font-bold text-cobalt text-lg">Linguine vongole e cozze</h3>
+          </div>
+          <p class="font-garamond italic text-notte/50 text-sm pl-6">Linguine with clams and mussels</p>
+        </div>
+        <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+      </div>
+
+    </div>
+
+    <!-- ── SECONDI ── -->
+    <div id="tab-secondi" class="menu-panel space-y-3" role="tabpanel">
+
+      <div class="bg-white rounded-2xl overflow-hidden border border-dorato/40 shadow-sm relative">
+        <div class="absolute top-0 right-0 bg-dorato text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">Il piatto</div>
+        <div class="p-5 pr-24 flex justify-between items-start">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+              <h3 class="font-fraunces font-bold text-cobalt text-lg">Grigliata di pesce</h3>
+            </div>
+            <p class="font-garamond italic text-notte/50 text-sm pl-6">Grilled seafood platter</p>
+            <p class="text-notte/40 text-xs pl-6 mt-0.5">tonno · scampi · gamberi rossi · pesce spada</p>
+            <p class="font-garamond italic text-notte/30 text-xs pl-6 mt-0.5">tuna · langoustines · red prawns · swordfish</p>
+          </div>
+          <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-5 flex justify-between items-start border border-notte/5 hover:border-rosa/30 transition-colors shadow-sm">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1">
+            <svg class="w-4 h-2.5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor"><path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/><path d="M60,55 L28,22 L44,55 L28,88 Z"/></svg>
+            <h3 class="font-fraunces font-bold text-cobalt text-lg">Frittura di paranza</h3>
+          </div>
+          <p class="font-garamond italic text-notte/50 text-sm pl-6">Mixed fried seafood · pesce azzurro del giorno</p>
+        </div>
+        <span class="text-notte/25 font-bold text-lg pl-5 flex-shrink-0">—</span>
+      </div>
+
+    </div>
+
+    <p class="text-center font-garamond italic text-notte/35 text-sm mt-10">
+      Menu completo e prezzi disponibili in sala &middot; Full menu and prices available in restaurant
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     LE NOSTRE SALE
+════════════════════════════════════════════════════════════ -->
+<section id="sale" class="py-20 px-5 bg-cobalt">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-14">
+      <div class="fish-rule text-white/20 mb-5 max-w-xs mx-auto">
+        <svg class="w-9 h-5 text-white/50 flex-shrink-0" viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+          <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+          <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+        </svg>
+      </div>
+      <h2 class="font-fraunces font-black text-white text-5xl sm:text-6xl mb-3">Le Nostre Sale</h2>
+      <p class="font-garamond italic text-white/65 text-xl">Ogni ambiente racconta un'emozione diversa</p>
+    </div>
+
+    <!-- Three cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Sala Azzurra -->
+      <article class="rounded-3xl overflow-hidden group">
+        <div class="relative h-60 overflow-hidden">
+          <img src="taverna-antica-7.jpg"
+               alt="Sala Azzurra — Taverna Antica"
+               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-cobalt/25"></div>
+          <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-cobalt font-bold text-xs px-4 py-1.5 rounded-full">
+            Sala Azzurra
+          </span>
+        </div>
+        <div class="bg-azzurro p-6">
+          <h3 class="font-fraunces font-bold text-cobalt text-2xl mb-2">Sala del Mare</h3>
+          <p class="text-notte/70 text-sm leading-relaxed">
+            Tovaglie bianche immacolate, tovaglioli blu cobalto. La sala principale, dove il Tirreno entra a tavola.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="bg-cobalt/10 text-cobalt text-xs font-medium px-3 py-1 rounded-full">Sala principale</span>
+            <span class="bg-cobalt/10 text-cobalt text-xs font-medium px-3 py-1 rounded-full">Pranzo &amp; Cena</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sala del Caminetto -->
+      <article class="rounded-3xl overflow-hidden group">
+        <div class="relative h-60 overflow-hidden">
+          <img src="photo1jpg-2.jpg"
+               alt="Sala del Caminetto — Taverna Antica"
+               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-amber-900/20"></div>
+          <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-amber-800 font-bold text-xs px-4 py-1.5 rounded-full">
+            Sala del Caminetto
+          </span>
+        </div>
+        <div class="bg-dorato-100 p-6">
+          <h3 class="font-fraunces font-bold text-amber-900 text-2xl mb-2">Sala Gialla</h3>
+          <p class="text-amber-900/70 text-sm leading-relaxed">
+            Ceramica tradizionale calabrese, caminetto acceso d'inverno. La sala delle famiglie e delle serate speciali.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="bg-dorato/25 text-amber-900 text-xs font-medium px-3 py-1 rounded-full">Caminetto</span>
+            <span class="bg-dorato/25 text-amber-900 text-xs font-medium px-3 py-1 rounded-full">Ceramica calabrese</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Terrazza -->
+      <article class="rounded-3xl overflow-hidden group">
+        <div class="relative h-60 overflow-hidden">
+          <img src="img-20180904-wa0048-largejpg.jpg"
+               alt="Terrazza — Taverna Antica"
+               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-notte/15"></div>
+          <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-amber-700 font-bold text-xs px-4 py-1.5 rounded-full">
+            Terrazza
+          </span>
+        </div>
+        <div class="stripes-bg p-6">
+          <h3 class="font-fraunces font-bold text-notte text-2xl mb-2">La Terrazza</h3>
+          <p class="text-notte/70 text-sm leading-relaxed">
+            Tendaggi a righe gialle e bianche, brezza di mare. L'estate calabrese all'aperto, in Piazza dei Martiri.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="bg-dorato/35 text-amber-900 text-xs font-medium px-3 py-1 rounded-full">Estate</span>
+            <span class="bg-dorato/35 text-amber-900 text-xs font-medium px-3 py-1 rounded-full">All'aperto</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PHOTO BREAK — full-width quote
+════════════════════════════════════════════════════════════ -->
+<div class="relative h-64 sm:h-80 lg:h-96 overflow-hidden">
+  <img src="678347474_1612744324186767_8967319365823291630_n.jpg"
+       alt="Atmosfera Taverna Antica"
+       class="w-full h-full object-cover">
+  <div class="absolute inset-0 flex items-center justify-center"
+       style="background: linear-gradient(135deg, rgba(0,61,165,.65) 0%, rgba(228,0,124,.45) 100%)">
+    <p class="font-fraunces font-black italic text-white text-3xl sm:text-4xl lg:text-5xl text-center px-6 leading-tight max-w-3xl">
+      "Cucina di mare.<br>Accoglienza di famiglia."
+    </p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     DOVE SIAMO + ORARI
+════════════════════════════════════════════════════════════ -->
+<section id="dove-siamo" class="py-20 px-5 bg-crema">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-14">
+      <div class="fish-rule text-cobalt mb-5 max-w-xs mx-auto">
+        <svg class="w-9 h-5 text-rosa flex-shrink-0" viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+          <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+          <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+        </svg>
+      </div>
+      <h2 class="font-fraunces font-black text-cobalt text-5xl sm:text-6xl">Dove Siamo</h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+
+      <!-- Info column -->
+      <div class="space-y-5">
+
+        <!-- Address -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-notte/5 flex items-start gap-4">
+          <div class="bg-cobalt text-white rounded-xl p-3 flex-shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="font-fraunces font-bold text-cobalt text-lg mb-1">Indirizzo &middot; Address</div>
+            <p class="text-notte/80">Piazza dei Martiri</p>
+            <p class="text-notte/80">87028 Praia a Mare (CS)</p>
+            <p class="font-garamond italic text-notte/50 text-sm mt-1">Calabria, Italia</p>
+          </div>
+        </div>
+
+        <!-- Hours -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-notte/5 flex items-start gap-4">
+          <div class="bg-rosa text-white rounded-xl p-3 flex-shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="font-fraunces font-bold text-cobalt text-lg mb-3">Orari &middot; Opening Hours</div>
+            <dl class="space-y-2 text-sm">
+              <div class="flex justify-between items-center py-2 border-b border-notte/5">
+                <dt class="text-notte/65 font-medium">Pranzo &middot; Lunch</dt>
+                <dd class="font-semibold text-cobalt">10:00 – 15:00</dd>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-notte/5">
+                <dt class="text-notte/65 font-medium">Cena Lun–Gio &middot; Mon–Thu Dinner</dt>
+                <dd class="font-semibold text-cobalt">18:30 – 23:00</dd>
+              </div>
+              <div class="flex justify-between items-center py-2">
+                <dt class="text-notte/65 font-medium">Cena Ven–Sab &middot; Fri–Sat Dinner</dt>
+                <dd class="font-semibold text-rosa">18:30 – 00:00</dd>
+              </div>
+            </dl>
+            <div class="mt-4 bg-cobalt/6 rounded-xl px-4 py-2.5 text-center">
+              <span class="text-cobalt font-bold text-sm">Aperto 7 giorni su 7 &middot; Open 7 days a week</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contacts -->
+        <div class="grid grid-cols-2 gap-4">
+          <a href="tel:+393336814187"
+             class="flex items-center gap-3 bg-cobalt hover:bg-cobalt/90 text-white rounded-2xl p-5 transition-all hover:shadow-xl hover:-translate-y-0.5 group">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            <div class="min-w-0">
+              <div class="text-white/65 text-xs font-medium">Telefono</div>
+              <div class="font-bold text-sm leading-tight">+39 333 681 4187</div>
+            </div>
+          </a>
+          <a href="https://wa.me/393336814187" target="_blank" rel="noopener"
+             class="flex items-center gap-3 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-2xl p-5 transition-all hover:shadow-xl hover:-translate-y-0.5 group">
+            <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <div>
+              <div class="text-white/65 text-xs font-medium">WhatsApp</div>
+              <div class="font-bold text-sm">Prenota ora</div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Map -->
+      <div class="rounded-2xl overflow-hidden shadow-sm border border-notte/5 h-full min-h-[420px]">
+        <iframe
+          src="https://maps.google.com/maps?q=Piazza+dei+Martiri+87028+Praia+a+Mare+CS+Italy&z=15&output=embed"
+          class="w-full h-full min-h-[420px]"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Taverna Antica su Google Maps — Piazza dei Martiri, Praia a Mare">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer class="bg-cobalt text-white py-16 px-5 relative overflow-hidden">
+  <!-- Background fish watermark -->
+  <div class="absolute -right-10 -bottom-8 pointer-events-none opacity-[.06]" aria-hidden="true">
+    <svg class="w-[380px] h-auto" viewBox="0 0 220 110" fill="white">
+      <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+      <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+    </svg>
+  </div>
+
+  <div class="max-w-5xl mx-auto relative z-10">
+
+    <!-- Logo + tagline -->
+    <div class="text-center mb-12">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <svg class="w-12 h-7 text-rosa" viewBox="0 0 220 110" fill="currentColor" aria-hidden="true">
+          <path d="M60,55 C60,30 88,13 138,18 C168,21 194,35 198,55 C194,75 168,89 138,93 C88,98 60,80 60,55 Z"/>
+          <path d="M60,55 L28,22 L44,55 L28,88 Z"/>
+          <circle cx="163" cy="46" r="8" fill="white"/>
+          <circle cx="165" cy="46" r="3.5" fill="#003DA5"/>
+        </svg>
+        <span class="font-fraunces font-black text-3xl tracking-widest">TAVERNA ANTICA</span>
+      </div>
+      <p class="font-garamond italic text-white/60 text-lg">Cucina di mare. Accoglienza di famiglia.</p>
+      <p class="text-white/35 text-sm mt-2">Piazza dei Martiri &middot; 87028 Praia a Mare (CS) &middot; Calabria</p>
+    </div>
+
+    <!-- Nav + Social -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-6 py-8 border-y border-white/10">
+      <nav class="flex flex-wrap gap-6 justify-center text-sm" aria-label="Footer navigation">
+        <a href="#cucina"     class="text-white/55 hover:text-white transition-colors">La Cucina</a>
+        <a href="#menu"       class="text-white/55 hover:text-white transition-colors">Menu</a>
+        <a href="#sale"       class="text-white/55 hover:text-white transition-colors">Le Sale</a>
+        <a href="#dove-siamo" class="text-white/55 hover:text-white transition-colors">Dove Siamo</a>
+      </nav>
+      <a href="https://www.facebook.com/TavernaAntica" target="_blank" rel="noopener"
+         class="flex items-center gap-2 text-white/55 hover:text-white transition-colors text-sm">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        Taverna Antica &middot; 1.736 follower
+      </a>
+    </div>
+
+    <!-- Bottom line -->
+    <div class="mt-8 text-center text-white/25 text-xs space-y-1">
+      <p>&copy; 2025 Taverna Antica &middot; Praia a Mare (CS) &middot; Tutti i diritti riservati</p>
+      <p>Tel: +39 333 681 4187 &middot; Aperto 7/7 &middot; Pranzo &amp; Cena</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     WHATSAPP FLOAT BUTTON
+════════════════════════════════════════════════════════════ -->
+<a href="https://wa.me/393336814187" target="_blank" rel="noopener"
+   class="wa-float fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center"
+   aria-label="Contattaci su WhatsApp">
+  <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <!-- Pulse ring -->
+  <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-white rounded-full animate-ping opacity-50" aria-hidden="true"></span>
+</a>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════════════ -->
+<script>
+  // ── Navbar: transparent on hero, cobalt on scroll ──
+  const navbar = document.getElementById('navbar');
+  function updateNav() {
+    if (window.scrollY > 72) {
+      navbar.classList.replace('nav-top', 'nav-scroll');
+    } else {
+      navbar.classList.replace('nav-scroll', 'nav-top');
+    }
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  // ── Mobile menu ──
+  const burger      = document.getElementById('burger');
+  const mobileMenu  = document.getElementById('mobile-menu');
+  const burgerOpen  = document.getElementById('burger-open');
+  const burgerClose = document.getElementById('burger-close');
+
+  burger.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden', isOpen);
+    burgerOpen.classList.toggle('hidden', !isOpen);
+    burgerClose.classList.toggle('hidden', isOpen);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      burgerOpen.classList.remove('hidden');
+      burgerClose.classList.add('hidden');
+    });
+  });
+
+  // ── Menu tab switch ──
+  const TABS = ['antipasti', 'primi', 'secondi'];
+  function switchTab(active) {
+    TABS.forEach(id => {
+      const panel = document.getElementById('tab-' + id);
+      const btn   = document.getElementById('btn-' + id);
+      if (id === active) {
+        panel.classList.add('active');
+        btn.classList.replace('tab-off', 'tab-on');
+      } else {
+        panel.classList.remove('active');
+        btn.classList.replace('tab-on', 'tab-off');
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
